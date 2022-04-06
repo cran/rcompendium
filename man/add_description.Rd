@@ -16,48 +16,41 @@ add_description(
 )
 }
 \arguments{
-\item{given}{a character of length 1
+\item{given}{A character of length 1. The given name of the project
+maintainer.}
 
-The given name of the package maintainer.}
+\item{family}{A character of length 1. The family name of the project
+maintainer.}
 
-\item{family}{a character of length 1
+\item{email}{A character of length 1. The email address of the project
+maintainer.}
 
-The family name of the package maintainer.}
+\item{orcid}{A character of length 1. The ORCID of the project maintainer.}
 
-\item{email}{a character of length 1
+\item{organisation}{A character of length 1. The name of the GitHub
+organisation to host the package. If \code{NULL} (default) the GitHub account
+will be used.}
 
-The email address of the package maintainer.}
+\item{open}{A logical value. If \code{TRUE} (default) the file is opened in the
+editor.}
 
-\item{orcid}{a character of length 1
+\item{overwrite}{A logical value. If a \code{DESCRIPTION} is already present and
+\code{overwrite = TRUE}, this file will be erased and replaced. Default is
+\code{FALSE}.}
 
-The ORCID of the package maintainer.}
-
-\item{organisation}{a character of length 1
-
-The name of the GitHub organisation to host the package. If \code{NULL}
-(default) the GitHub account will be used.}
-
-\item{open}{a logical value
-
-If \code{TRUE} (default) the file is opened in the editor.}
-
-\item{overwrite}{a logical value
-
-If a \code{DESCRIPTION} is already present and \code{overwrite = TRUE}, this file
-will be erased and replaced. Default is \code{FALSE}.}
-
-\item{quiet}{a logical value
-
-If \code{TRUE} messages are deleted. Default is \code{FALSE}.}
+\item{quiet}{A logical value. If \code{TRUE} messages are deleted. Default is
+\code{FALSE}.}
 }
 \value{
-None
+No return value.
 }
 \description{
-This function creates a \code{DESCRIPTION} file at the root of the project based
-on a template (adapted from \href{https://usethis.r-lib.org}{\code{usethis}}). User
-credentials can be passed as arguments but it is recommended to store them
-in the \code{.Rprofile} file with \code{\link[=set_credentials]{set_credentials()}}.
+This function creates a \code{DESCRIPTION} file at the root of the project. This
+file contains metadata of the project. Some information (title, description,
+version, etc.) must be edited by hand. For more information:
+\url{https://r-pkgs.org/description.html}.
+User credentials can be passed as arguments but it is recommended to store
+them in the \code{.Rprofile} file with \code{\link[=set_credentials]{set_credentials()}}.
 }
 \examples{
 \dontrun{
@@ -68,10 +61,12 @@ add_description(organisation = "MySociety")
 Other create files: 
 \code{\link{add_citation}()},
 \code{\link{add_compendium}()},
+\code{\link{add_dockerfile}()},
 \code{\link{add_license}()},
 \code{\link{add_makefile}()},
 \code{\link{add_package_doc}()},
 \code{\link{add_readme_rmd}()},
+\code{\link{add_renv}()},
 \code{\link{add_testthat}()},
 \code{\link{add_vignette}()}
 }

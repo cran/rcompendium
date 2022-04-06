@@ -7,20 +7,19 @@
 add_dependencies(compendium = NULL)
 }
 \arguments{
-\item{compendium}{a character of length 1
-
-The name of the folder to recursively detect dependencies to be added to
-the \code{Imports} field of \code{DESCRIPTION} file. It can be \code{'analysis/'} (if
-additional folders, i.e. \verb{data/}, \verb{outputs/}, \verb{figures/}, etc. have been
-created in this folder), \code{'.'} (if folders \verb{data/}, \verb{outputs/},
-\verb{figures/}, etc. have been created at the root of the project), etc.
+\item{compendium}{A character of length 1. The name of the folder to
+recursively detect dependencies to be added to the \code{Imports} field of
+\code{DESCRIPTION} file. It can be \code{'analysis/'} (if additional folders, i.e.
+\verb{data/}, \verb{outputs/}, \verb{figures/}, etc. have been created in this folder),
+\code{'.'} (if folders \verb{data/}, \verb{outputs/}, \verb{figures/}, etc. have been created
+at the root of the project), etc.
 See \code{\link[=new_compendium]{new_compendium()}} for further information.
 
 Default is \code{compendium = NULL} (i.e. no additional folder are inspected
 but \verb{R/}, \code{NAMESPACE}, \verb{vignettes/}, and \verb{tests/} are still inspected).}
 }
 \value{
-None
+No return value.
 }
 \description{
 This function detects external dependencies used in \verb{R/}, \code{NAMESPACE}, and
@@ -60,6 +59,7 @@ Other development functions:
 \code{\link{add_github_actions_check}()},
 \code{\link{add_github_actions_codecov}()},
 \code{\link{add_github_actions_pkgdown}()},
+\code{\link{add_github_actions_render}()},
 \code{\link{add_r_depend}()},
 \code{\link{add_to_buildignore}()},
 \code{\link{add_to_gitignore}()}

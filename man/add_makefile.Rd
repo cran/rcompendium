@@ -14,33 +14,26 @@ add_makefile(
 )
 }
 \arguments{
-\item{given}{a character of length 1
+\item{given}{A character of length 1. The given name of the project
+maintainer.}
 
-The given name of the package maintainer.}
+\item{family}{A character of length 1. The family name of the project
+maintainer.}
 
-\item{family}{a character of length 1
+\item{email}{A character of length 1. The email address of the project
+maintainer.}
 
-The family name of the package maintainer.}
+\item{open}{A logical value. If \code{TRUE} (default) the file is opened in the
+editor.}
 
-\item{email}{a character of length 1
+\item{overwrite}{A logical value. If this file is already present and
+\code{overwrite = TRUE}, it will be erased and replaced. Default is \code{FALSE}.}
 
-The email address of the package maintainer.}
-
-\item{open}{a logical value
-
-If \code{TRUE} (default) the file is opened in the editor.}
-
-\item{overwrite}{a logical value
-
-If this file is already present and \code{overwrite = TRUE}, it will be erased
-and replaced. Default is \code{FALSE}.}
-
-\item{quiet}{a logical value
-
-If \code{TRUE} messages are deleted. Default is \code{FALSE}.}
+\item{quiet}{A logical value. If \code{TRUE} messages are deleted. Default is
+\code{FALSE}.}
 }
 \value{
-None
+No return value.
 }
 \description{
 This function creates a Make-like R file (\code{make.R}) at the root of the
@@ -58,9 +51,11 @@ Other create files:
 \code{\link{add_citation}()},
 \code{\link{add_compendium}()},
 \code{\link{add_description}()},
+\code{\link{add_dockerfile}()},
 \code{\link{add_license}()},
 \code{\link{add_package_doc}()},
 \code{\link{add_readme_rmd}()},
+\code{\link{add_renv}()},
 \code{\link{add_testthat}()},
 \code{\link{add_vignette}()}
 }

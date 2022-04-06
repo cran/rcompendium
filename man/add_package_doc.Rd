@@ -7,21 +7,17 @@
 add_package_doc(open = TRUE, overwrite = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{open}{a logical value
+\item{open}{A logical value. If \code{TRUE} (default) the file is opened in the
+editor.}
 
-If \code{TRUE} (default) the file is opened in the editor.}
+\item{overwrite}{A logical value. If this file is already present and
+\code{overwrite = TRUE}, it will be erased and replaced. Default is \code{FALSE}.}
 
-\item{overwrite}{a logical value
-
-If this file is already present and \code{overwrite = TRUE}, it will be erased
-and replaced. Default is \code{FALSE}.}
-
-\item{quiet}{a logical value
-
-If \code{TRUE} messages are deleted. Default is \code{FALSE}.}
+\item{quiet}{A logical value. If \code{TRUE} messages are deleted. Default is
+\code{FALSE}.}
 }
 \value{
-None
+No return value.
 }
 \description{
 This function adds a package-level documentation file (\code{pkg-package.R}) in
@@ -39,9 +35,11 @@ Other create files:
 \code{\link{add_citation}()},
 \code{\link{add_compendium}()},
 \code{\link{add_description}()},
+\code{\link{add_dockerfile}()},
 \code{\link{add_license}()},
 \code{\link{add_makefile}()},
 \code{\link{add_readme_rmd}()},
+\code{\link{add_renv}()},
 \code{\link{add_testthat}()},
 \code{\link{add_vignette}()}
 }

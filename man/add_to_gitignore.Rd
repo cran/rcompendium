@@ -2,26 +2,22 @@
 % Please edit documentation in R/add_to_gitignore.R
 \name{add_to_gitignore}
 \alias{add_to_gitignore}
-\title{Create a gitignore file}
+\title{Add to the .gitignore file}
 \usage{
 add_to_gitignore(x, open = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{x}{a character vector
+\item{x}{A character vector. One or several files/folders names to be added
+to the \code{.gitignore}.}
 
-One or several files/directories names to be added to the \code{.gitignore}.}
+\item{open}{A logical value. If \code{TRUE} the \code{.gitignore} file is opened in
+the editor. Default is \code{FALSE}.}
 
-\item{open}{a logical value
-
-If \code{TRUE} the \code{.gitignore} file is opened in the editor.
-Default is \code{FALSE}.}
-
-\item{quiet}{a logical value
-
-If \code{TRUE} messages are deleted. Default is \code{FALSE}.}
+\item{quiet}{A logical value. If \code{TRUE} messages are deleted. Default is
+\code{FALSE}.}
 }
 \value{
-None
+No return value.
 }
 \description{
 This function creates a \code{.gitignore} file at the root of the project based on
@@ -40,6 +36,7 @@ Other development functions:
 \code{\link{add_github_actions_check}()},
 \code{\link{add_github_actions_codecov}()},
 \code{\link{add_github_actions_pkgdown}()},
+\code{\link{add_github_actions_render}()},
 \code{\link{add_r_depend}()},
 \code{\link{add_to_buildignore}()}
 }

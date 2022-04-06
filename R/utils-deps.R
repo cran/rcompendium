@@ -14,9 +14,9 @@ get_deps_in_functions_r <- function() {
   is_package()
   path <- path_proj()
   
-  if (!dir.exists(file.path(path, "R"))) {
-    stop("The directory 'R/' cannot be found.")
-  }
+  # if (!dir.exists(file.path(path, "R"))) {
+  #   stop("The directory 'R/' cannot be found.")
+  # }
   
   
   x <- list.files(path = file.path(path, "R"), pattern = "\\.R$", 
@@ -255,7 +255,7 @@ get_deps_extra <- function(compendium = NULL) {
                   ignore.case = TRUE, recursive = TRUE)
   
   pos <- grep(paste0(.Platform$file.sep, 
-                     "(tests|vignettes|inst)", 
+                     "(tests|vignettes|inst|renv)", 
                      .Platform$file.sep, "|README"), x)
   
   if (length(pos)) x <- x[-pos]
@@ -320,7 +320,7 @@ get_deps_extra <- function(compendium = NULL) {
                     full.names = TRUE, ignore.case = TRUE, recursive = TRUE)
     
     pos <- grep(paste0(.Platform$file.sep, 
-                       "(tests|vignettes|inst)", 
+                       "(tests|vignettes|inst|renv)", 
                        .Platform$file.sep, "|README"), x)
     
     if (length(pos)) x <- x[-pos]
@@ -393,6 +393,13 @@ get_deps_in_vignettes <- function() {
     
     x <- lapply(x, function(x) gsub("\".*\"", "", x))
     x <- lapply(x, function(x) gsub("\'.*\'", "", x))
+    
+    
+    ## Remove inline code (not evaluated) ----
+    
+    pattern <- "`[A-Z|a-z|0-9|\\.]{2,}::[A-Z|a-z|0-9|\\.|_]{1,}"
+    
+    x <- lapply(x, function(x) gsub(pattern, "", x))
     
     
     ## Functions called as pkg::fun() ----

@@ -1,59 +1,49 @@
 ## ---- include = FALSE---------------------------------------------------------
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment  = "#>"
-)
-
-## ----eval=FALSE---------------------------------------------------------------
-#  ## Install < remotes > package (if not already installed) ----
-#  if (!requireNamespace("remotes", quietly = TRUE)) {
-#    install.packages("remotes")
-#  }
-#  
-#  ## Install dev version of < rcompendium > from GitHub ----
-#  remotes::install_github("FRBCesab/rcompendium")
+knitr::opts_chunk$set(collapse = TRUE, comment  = "#>")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  gert::git_config_global(name = "user.name",   value = "John Doe")
-#  gert::git_config_global(name = "user.email",  value = "john.doe@@domain.com")
-#  gert::git_config_global(name = "github.user", value = "jdoe")
+#  gert::git_config_global_set(name = "user.name",   value = "John Doe")
+#  gert::git_config_global_set(name = "user.email",  value = "john.doe@domain.com")
+#  gert::git_config_global_set(name = "github.user", value = "jdoe")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  library(rcompendium)
+#  ## Define ONCE FOR ALL your credentials ----
 #  
-#  ## Define **ONCE FOR ALL** your credentials ----
+#  rcompendium::set_credentials(given = "John", family = "Doe",
+#                               email = "john.doe@domain.com",
+#                               orcid = "9999-9999-9999-9999", protocol = "ssh")
 #  
-#  set_credentials(given = "John", family = "Doe",
-#                  email = "john.doe@@domain.com",
-#                  orcid = "9999-9999-9999-9999", protocol = "ssh")
+#  
+#  ## CREATE A NEW EMPTY RSTUDIO PROJECT ----
+#  
 #  
 #  ## Create an R package structure ----
 #  
-#  new_package()
+#  rcompendium::new_package()
 #  
 #  
 #  ## Then...
+#  ## ... edit metadata in DESCRIPTION, CITATION, README.Rmd, etc.
 #  ## ... implement and document R functions in R/
-#  ## ... write units tests in tests/testthat/
 #  
 #  
-#  ## Update package (documentation, dependencies, README, check) ----
+#  ## Update functions documentation and NAMESPACE ----
 #  
-#  refresh()
-#  
-#  
-#  ## Update Repository Status (example) ----
-#  
-#  add_repostatus_badge(status = "active")
+#  devtools::document()
 #  
 #  
-#  ## Change LICENSE (example) ----
+#  ## Update list of dependencies in DESCRIPTION ----
 #  
-#  get_licenses()
-#  add_license(license = "MIT")
+#  rcompendium::add_dependencies()
 #  
 #  
-#  ## Update package (documentation, dependencies, README, check) ----
+#  ## Check package ----
 #  
-#  refresh()
+#  devtools::check()
+#  
+#  
+#  ## Example: use of an add_*() function ...
+#  ## ... update 'Number of Dependencies Badge' in README.Rmd ----
+#  
+#  rcompendium::add_dependencies_badge()
 

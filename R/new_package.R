@@ -28,27 +28,24 @@
 #' "GitHub last" workflow
 #' (\url{https://happygitwithr.com/existing-github-last.html}).
 #' Configuration files for GitHub Actions to automatically 1) check the 
-#' package, 2) test and report code coverage, and 3) deploy the website 
+#' package, 2) test and report code coverage, and 3) deploy the website using
 #' [`pkgdown`](https://pkgdown.r-lib.org/index.html) 
 #' will be added in the `.github/` folder. See below the section 
 #' **Creating a GitHub repo**.
 #' 
-#' @param license a character vector of length 1
-#' 
-#'   The license to be used for this package. Run [get_licenses()] to choose an 
-#'   appropriate one. Default is `license = 'GPL (>= 2)'` 
+#' @param license A character vector of length 1. The license to be used for 
+#'   this package. Run [get_licenses()] to choose an appropriate one. 
+#'   Default is `license = 'GPL (>= 2)'` 
 #'   
 #'   The license can be changed later by calling [add_license()] (and 
 #'   [add_license_badge()] or [refresh()] to update the corresponding badge in
 #'   the README).
 #' 
-#' @param status a character vector of length 1
-#' 
-#'   The status of the project according to the standard defined by the 
-#'   \url{https://www.repostatus.org} project. One among `'concept'` 
-#'   (default), `'wip'`, `'suspended'`, `'abandoned'`, `'active'`, 
-#'   `'inactive'`, or `'unsupported'`. See [add_repostatus_badge()] for further 
-#'   information. 
+#' @param status A character vector of length 1. The status of the project 
+#'   according to the standard defined by the  \url{https://www.repostatus.org} 
+#'   project. One among `'concept'` (default), `'wip'`, `'suspended'`, 
+#'   `'abandoned'`, `'active'`, `'inactive'`, or `'unsupported'`. 
+#'   See [add_repostatus_badge()] for further information. 
 #'   
 #'   This argument is used to add a badge to the `README.Rmd` to help visitors 
 #'   to better understand your project. If you don't want this badge use 
@@ -56,9 +53,8 @@
 #'   
 #'   This status can be added/changed later by using [add_repostatus_badge()].
 #' 
-#' @param lifecycle a character vector of length 1
-#'   
-#'   The life cycle stage of the project according to the standard defined at 
+#' @param lifecycle A character vector of length 1. The life cycle stage of the 
+#'   project according to the standard defined at  
 #'   \url{https://lifecycle.r-lib.org/articles/stages.html}. One among 
 #'   `'experimental'` (default), `'stable'`, `'deprecated'`, or `'superseded'`.
 #'   See [add_lifecycle_badge()] for further information. 
@@ -69,52 +65,45 @@
 #'   
 #'   This stage can be added/changed later by using [add_lifecycle_badge()].
 #' 
-#' @param vignette a logical value
-#' 
-#'   If `TRUE` (default) creates a vignette in `vignettes/`. Packages 
-#'   [`knitr`](https://yihui.org/knitr/) and 
+#' @param vignette A logical value. If `TRUE` (default) creates a vignette in 
+#'   `vignettes/`. Packages [`knitr`](https://yihui.org/knitr/) and 
 #'   [`rmarkdown`](https://rmarkdown.rstudio.com/) are also added to the 
 #'   `Suggests` field in the `DESCRIPTION` file.
 #' 
-#' @param test a logical value
-#' 
-#'   If `TRUE` (default) initializes units tests by running 
-#'   [usethis::use_testthat()]. Package 
+#' @param test A logical value. If `TRUE` (default) initializes units tests by 
+#'   running [usethis::use_testthat()]. Package 
 #'   [`testthat`](https://testthat.r-lib.org) is also added to the `Suggests` 
 #'   field in the `DESCRIPTION` file.
 #' 
-#' @param create_repo a logical value
+#' @param create_repo A logical value. If `TRUE` (default) creates a repository
+#'   (public if `private = FALSE` or private if `private = TRUE`) on GitHub. 
+#'   See below the section **Creating a GitHub repo**.
 #' 
-#'   If `TRUE` (default) creates a repository (public if `private = FALSE` or 
-#'   private if `private = TRUE`) on GitHub. See below the section
-#'   **Creating a GitHub repo**.
+#' @param private A logical value. If `TRUE` creates a private repository on 
+#'   user GitHub account (or organisation). Default is `private = FALSE`.
 #' 
-#' @param private a logical value
-#' 
-#'   If `TRUE` creates a private repository on user GitHub account (or 
-#'   organisation). Default is `private = FALSE`.
-#' 
-#' @param gh_check a logical value
-#' 
-#'   If `TRUE` (default) configures GitHub Actions to automatically check and 
-#'   test the package after each push. This will run `R CMD check` on the three 
-#'   major operating systems (Ubuntu, macOS, and Windows) on the latest release 
-#'   of R. See [add_github_actions_check()] for further information. 
-#'   
-#'   If `create_repo = FALSE` this argument is ignored.
-#' 
-#' @param codecov a logical value
-#' 
-#'   If `TRUE` (default) configures GitHub Actions to automatically report 
-#'   the code coverage of units tests after each push. 
-#'   See [add_github_actions_codecov()] for further information. 
+#' @param gh_check A logical value. If `TRUE` (default) configures GitHub 
+#'   Actions to automatically check and test the package after each push. This 
+#'   will run `R CMD check` on the three major operating systems (Ubuntu, macOS,
+#'   and Windows) on the latest release of R. See [add_github_actions_check()] 
+#'   for further information. 
 #'   
 #'   If `create_repo = FALSE` this argument is ignored.
 #'   
-#' @param website a logical value
+#' @param gh_render A logical value. If `TRUE` (default) configures GitHub 
+#'   Actions to automatically knit the `README.Rmd` after each push. 
+#'   See [add_github_actions_render()] for further information. 
+#'   
+#'   If `create_repo = FALSE` this argument is ignored.
 #' 
-#'   If `TRUE` (default) configures GitHub Actions to automatically build and 
-#'   deploy the package website 
+#' @param codecov A logical value. If `TRUE` (default) configures GitHub 
+#'   Actions to automatically report the code coverage of units tests after 
+#'   each push. See [add_github_actions_codecov()] for further information. 
+#'   
+#'   If `create_repo = FALSE` this argument is ignored.
+#'   
+#' @param website A logical value. If `TRUE` (default) configures GitHub 
+#'   Actions to automatically build and deploy the package website 
 #'   (using [`pkgdown`](https://pkgdown.r-lib.org/index.html)) 
 #'   after each push. A **gh-pages** branch will be created using 
 #'   [usethis::use_github_pages()] and the GitHub repository will be 
@@ -122,55 +111,47 @@
 #'   
 #'   If `create_repo = FALSE` this argument is ignored.
 #' 
-#' @param given a character vector of length 1
-#' 
-#'   The given name of the maintainer of the package. If `NULL` (default) the 
-#'   function will try to get this value by reading the `.Rprofile` file. 
+#' @param given A character vector of length 1. The given name of the 
+#'   maintainer of the package. If `NULL` (default) the function will try to 
+#'   get this value by reading the `.Rprofile` file. 
 #'   
 #'   For further information see [set_credentials()] and below the section 
 #'   **Managing credentials**.
 #' 
-#' @param family a character vector of length 1
-#' 
-#'   The family name of the maintainer of the package. If `NULL` (default) the 
-#'   function will try to get this value by reading the `.Rprofile` file. 
+#' @param family A character vector of length 1. The family name of the 
+#'   maintainer of the package. If `NULL` (default) the function will try to 
+#'   get this value by reading the `.Rprofile` file. 
 #'   
 #'   For further information see [set_credentials()] and below the section 
 #'   **Managing credentials**.
 #' 
-#' @param email a character vector of length 1
-#' 
-#'   The email address of the maintainer of the package. If `NULL` (default) 
-#'   the function will try to get this value by reading the `.Rprofile` file. 
+#' @param email A character vector of length 1. The email address of the 
+#'   maintainer of the package. If `NULL` (default) the function will try to 
+#'   get this value by reading the `.Rprofile` file. 
 #'   
 #'   For further information see [set_credentials()] and below the section 
 #'   **Managing credentials**.
 #' 
-#' @param orcid a character vector of length 1
-#' 
-#'   The ORCID of the maintainer of the package. If `NULL` (default) the 
-#'   function will try to get this value by reading the `.Rprofile` file. 
+#' @param orcid A character vector of length 1. The ORCID of the maintainer of 
+#'   the package. If `NULL` (default) the function will try to get this value 
+#'   by reading the `.Rprofile` file. 
 #'   
 #'   For further information see [set_credentials()] and below the section 
 #'   **Managing credentials**.
 #' 
-#' @param organisation a character vector of length 1
-#' 
-#'   The GitHub organisation to host the repository. If defined it will 
-#'   overwrite the GitHub pseudo.
+#' @param organisation A character vector of length 1. The GitHub organisation 
+#'   to host the repository. If defined it will overwrite the GitHub pseudo.
 #' 
 #'   Default is `organisation = NULL` (the GitHub pseudo will be used).
 #' 
-#' @param overwrite a logical value
+#' @param overwrite A logical value. If `TRUE` files written from templates and 
+#'   modified by user are erased. Default is `overwrite = FALSE`. 
+#'   **Be careful while using this argument**.
 #' 
-#'   If `TRUE` files written from templates and modified by user are erased. 
-#'   Default is `overwrite = FALSE`. **Be careful while using this argument**.
-#' 
-#' @param quiet a logical value
-#' 
-#'   If `TRUE` messages are deleted. Default is `FALSE`.
+#' @param quiet A logical value. If `TRUE` messages are deleted. Default is 
+#'   `FALSE`.
 #'   
-#' @return None
+#' @return No return value.
 #'
 #'
 #' @section Recommended workflow:
@@ -220,22 +201,27 @@
 #' 
 #' ```
 #' {
-#' "name": "John Doe",
-#' "login": "jdoe",
-#' "html_url": "https://github.com/jdoe",
-#' ...
+#'   "name": "John Doe",
+#'   "login": "jdoe",
+#'   "html_url": "https://github.com/jdoe",
+#'   ...
 #' }
 #' ```
 #' 
 #' Otherwise you might need to run:
 #' 
 #' ```
-#' gert::git_config_global(name = "user.name", value = "John Doe")
-#' gert::git_config_global(name = "user.email", value = "john.doe@@domain.com")
-#' gert::git_config_global(name = "github.user", value = "jdoe")
+#' gert::git_config_global_set(name  = "user.name", 
+#'                             value = "John Doe")
+#'                             
+#' gert::git_config_global_set(name  = "user.email", 
+#'                             value = "john.doe@@domain.com")
+#'                             
+#' gert::git_config_global_set(name  = "github.user", 
+#'                             value = "jdoe")
 #' ```
 #' 
-#' See [gert::git_config()] for further information.
+#' See [gert::git_config_global_set()] for further information.
 #' 
 #' 
 #' @section Creating a GitHub repo:
@@ -249,22 +235,22 @@
 #' If you don't have a **GITHUB PAT** locally stored, you must:
 #' 1. Obtain a new one from your GitHub account. **Make sure to select 
 #' at least the first two scopes (private repository and workflow)**
-#' 2. Store it in the `.Renviron` file by using [usethis::edit_r_environ()] 
-#' and adding the following line: `GITHUB_PAT='99z9...z9'`
+#' 2. Store it in the `~/.Renviron` file by using [usethis::edit_r_environ()] 
+#' and adding the following line: `GITHUB_PAT='ghp_99z9...z9'`
 #' 
 #' Run [usethis::gh_token_help()] for more information about getting and 
 #' configuring a **GITHUB PAT**.
 #' 
-#' If everything is well configured you should see something like after calling
-#' [gh::gh_whoami()]:
+#' If everything is well configured you should see something like this after 
+#' calling [gh::gh_whoami()]:
 #' 
 #' ```
 #' {
-#' "name": "John Doe",
-#' "login": "jdoe",
-#' "html_url": "https://github.com/jdoe",
-#' "scopes": "delete_repo, repo, workflow",
-#' "token": "99z9...z9"
+#'   "name": "John Doe",
+#'   "login": "jdoe",
+#'   "html_url": "https://github.com/jdoe",
+#'   "scopes": "delete_repo, repo, workflow",
+#'   "token": "ghp_99z9...z9"
 #' }
 #' ```
 #' 
@@ -298,9 +284,9 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
                         lifecycle = "experimental", vignette = TRUE, 
                         test = TRUE, create_repo = TRUE, private = FALSE, 
                         gh_check = TRUE, codecov = TRUE, website = TRUE, 
-                        given = NULL, family = NULL, email = NULL, 
-                        orcid = NULL, organisation = NULL, overwrite = FALSE, 
-                        quiet = FALSE) {
+                        gh_render = TRUE, given = NULL, family = NULL, 
+                        email = NULL, orcid = NULL, organisation = NULL, 
+                        overwrite = FALSE, quiet = FALSE) {
   
   
   ## If not RStudio ----
@@ -412,9 +398,10 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     
   } else {
     
-    gh_check <- FALSE
-    codecov  <- FALSE
-    website  <- FALSE
+    gh_check  <- FALSE
+    codecov   <- FALSE
+    website   <- FALSE
+    gh_render <- FALSE
   }
   
   
@@ -542,7 +529,7 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   if (!file.exists(file.path(path_proj(), "R", "fun-demo.R"))) {
     
     invisible(
-      file.copy(system.file(file.path("templates", "__RDEMO__"), 
+      file.copy(system.file(file.path("templates", "fun-demo.R"), 
                             package = "rcompendium"), 
                 file.path(path_proj(), "R", "fun-demo.R"), 
                 overwrite = overwrite)) 
@@ -628,11 +615,11 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   ## Commit changes ----
   
   invisible(gert::git_add("."))
-  invisible(gert::git_commit(":tada: Initial commit"))
+  invisible(gert::git_commit("Init repo"))
 
   if (!quiet) {
     ui_done(paste0("Committing changes with the following message: ", 
-                   "{ui_value('Initial commit')}"))
+                   "{ui_value('Init repo')}"))
   }
   
   
@@ -663,7 +650,7 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   
   
   ##
-  ## CONFIGURING GITHUB ACTIONS ----
+  ## GHA R-CMD-Check ----
   ## 
   
   
@@ -672,9 +659,6 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     
     ui_title("Configuring GH Actions - R CMD CHECK")
     
-    
-    ## R-CMD-Check ----
-    
     add_github_actions_check(quiet = quiet)
     add_to_buildignore(".github", quiet = quiet)
   }
@@ -682,7 +666,7 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   
   
   ##
-  ## CONFIGURING CODE COVERAGE ----
+  ## GHA Code coverage ----
   ## 
   
   
@@ -691,29 +675,37 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     
     ui_title("Configuring GH Actions - Code Coverage")
     
-    
-    ## R-CMD-Check ----
-    
     add_github_actions_codecov(quiet = quiet)
+    add_to_buildignore(".github", quiet = quiet)
+  }
+  
+  
+  
+  ##
+  ## GHA Render README ----
+  ## 
+  
+  
+  
+  if (gh_render) {
+    
+    ui_title("Configuring GH Actions - Render README")
+    
+    add_github_actions_render(quiet = quiet)
     add_to_buildignore(".github", quiet = quiet)
   }
   
 
   
   ##
-  ## DEPLOYING WEBSITE ----
+  ## GHA Website deployment ----
   ## 
   
-  
 
-  ## Deploy website ----
   
   if (website) {
     
     ui_title("Configuring GH Actions - Website deployment")
-    
-    
-    ## Add pkgdown with GH Actions config file ----
     
     add_github_actions_pkgdown()
     add_to_buildignore(".github", quiet = quiet)
@@ -731,17 +723,17 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   
   
   
-  ui_title("Committing changes")
-  
-  if (gh_check || codecov || website) {
+  if (gh_check || codecov || gh_render || website) {
+    
+    ui_title("Committing changes")
     
     invisible(gert::git_add("."))
-    invisible(gert::git_commit(":rocket: Configure GH Actions"))
+    invisible(gert::git_commit("Setup GHA"))
     
     if (!quiet) {
       
       ui_done(paste0("Committing changes with the following message: ", 
-                     "{ui_value('Configure GH Actions')}"))
+                     "{ui_value('Setup GHA')}"))
     }
   }
   
@@ -809,12 +801,12 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   ui_title("Committing changes")
   
   invisible(gert::git_add("."))
-  invisible(gert::git_commit(":art: Adding badges"))
+  invisible(gert::git_commit("Edit README"))
     
   if (!quiet) {
     
     ui_done(paste0("Committing changes with the following message: ", 
-                   "{ui_value('Adding badges')}"))
+                   "{ui_value('Edit README')}"))
   }
 
 
@@ -842,7 +834,6 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   
   ui_line()
   
-  ui_todo("Refresh your package with {ui_code('refresh()')}")
   ui_todo("...and commit your changes!")
   
   invisible(NULL)

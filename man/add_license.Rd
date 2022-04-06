@@ -7,30 +7,24 @@
 add_license(license = NULL, given = NULL, family = NULL, quiet = FALSE)
 }
 \arguments{
-\item{license}{a character of length 1
+\item{license}{A character of length 1. The chosen license.
+Run \code{\link[=get_licenses]{get_licenses()}}) to select an appropriate one.}
 
-The chosen license. Run \code{\link[=get_licenses]{get_licenses()}}) to select an appropriate one.}
+\item{given}{A character of length 1. The given name of the copyright holder.
+Only required if \code{license = 'MIT'}. If is \code{NULL} (default) and
+\code{license = 'MIT'}, this function will try to retrieve the value of this
+parameter from the \code{.Rprofile} file (edited with \code{\link[=set_credentials]{set_credentials()}}).}
 
-\item{given}{a character of length 1
+\item{family}{A character of length 1. The family name of the copyright
+holder. Only required if \code{license = 'MIT'}. If is \code{NULL} (default) and
+\code{license = 'MIT'}, this function will try to retrieve the value of this
+parameter from the \code{.Rprofile} file (edited with \code{\link[=set_credentials]{set_credentials()}}).}
 
-The given name of the copyright holder. Only required if
-\code{license = 'MIT'}. If is \code{NULL} (default) and \code{license = 'MIT'}, this
-function will try to retrieve the value of this parameter from the
-\code{.Rprofile} file (edited with \code{\link[=set_credentials]{set_credentials()}}).}
-
-\item{family}{a character of length 1
-
-The family name of the copyright holder. Only required if
-\code{license = 'MIT'}. If is \code{NULL} (default) and \code{license = 'MIT'}, this
-function will try to retrieve the value of this parameter from the
-\code{.Rprofile} file (edited with \code{\link[=set_credentials]{set_credentials()}}).}
-
-\item{quiet}{a logical value
-
-If \code{TRUE} messages are deleted. Default is \code{FALSE}.}
+\item{quiet}{A logical value. If \code{TRUE} messages are deleted. Default is
+\code{FALSE}.}
 }
 \value{
-None
+No return value.
 }
 \description{
 This function adds a license to the project. It will add the license name
@@ -48,9 +42,11 @@ Other create files:
 \code{\link{add_citation}()},
 \code{\link{add_compendium}()},
 \code{\link{add_description}()},
+\code{\link{add_dockerfile}()},
 \code{\link{add_makefile}()},
 \code{\link{add_package_doc}()},
 \code{\link{add_readme_rmd}()},
+\code{\link{add_renv}()},
 \code{\link{add_testthat}()},
 \code{\link{add_vignette}()}
 }

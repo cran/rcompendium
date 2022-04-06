@@ -6,7 +6,7 @@
 #' `tests/testthat/test-demo.R`. The sample file will test a demo function
 #' created in `R/fun-demo.R`.
 #' 
-#' @return None
+#' @return No return value.
 #'
 #' @export
 #' 
@@ -28,7 +28,7 @@ add_testthat <- function() {
     if (!file.exists(path)) {
       
       invisible(
-        file.copy(system.file(file.path("templates", "__TESTDEMO__"), 
+        file.copy(system.file(file.path("templates", "test-demo.R"), 
                               package = "rcompendium"), path, 
                   overwrite = TRUE)) 
     }

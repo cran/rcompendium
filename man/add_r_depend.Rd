@@ -7,7 +7,7 @@
 add_r_depend()
 }
 \value{
-None
+No return value.
 }
 \description{
 This function adds the minimal R version to the \code{Depends} field of the
@@ -26,6 +26,7 @@ Other development functions:
 \code{\link{add_github_actions_check}()},
 \code{\link{add_github_actions_codecov}()},
 \code{\link{add_github_actions_pkgdown}()},
+\code{\link{add_github_actions_render}()},
 \code{\link{add_to_buildignore}()},
 \code{\link{add_to_gitignore}()}
 }

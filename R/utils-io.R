@@ -154,12 +154,12 @@ add_sticker <- function(overwrite = FALSE, quiet = FALSE) {
   
   stop_if_not_logical(overwrite, quiet)
   
-  path <- file.path(path_proj(), "man", "figures", "hexsticker.png")
+  path <- file.path(path_proj(), "man", "figures", "package-sticker.png")
   
   if (file.exists(path) && !overwrite) {
     
-    stop("A 'man/figures/hexsticker.png' is already present. If you want to ",
-         "replace it, please use `overwrite = TRUE`.")
+    stop("A 'man/figures/package-sticker.png' is already present. If you want ",
+         "to replace it, please use `overwrite = TRUE`.")
   }
   
   
@@ -168,12 +168,69 @@ add_sticker <- function(overwrite = FALSE, quiet = FALSE) {
                recursive = TRUE)
     
   invisible(
-    file.copy(system.file(file.path("templates", "hexsticker.png"), 
+    file.copy(system.file(file.path("templates", "package-sticker.png"), 
                           package = "rcompendium"), path, overwrite = TRUE))
+  
+
+  if (!dir.exists(file.path(path_proj(), "inst", "package-sticker")))
+    dir.create(file.path(path_proj(), "inst", "package-sticker"), 
+               showWarnings = FALSE, recursive = TRUE)
+  
+  
+  path <- file.path(path_proj(), "inst", "package-sticker", "r_logo.png")
+  
+  if (!file.exists(path)) {
+    invisible(
+      file.copy(system.file(file.path("templates", "r_logo.png"), 
+                            package = "rcompendium"), path, overwrite = FALSE))
+  }
+  
+  
+  path <- file.path(path_proj(), "inst", "package-sticker", "package-sticker.R")
+  
+  if (!file.exists(path)) {
+    invisible(
+      file.copy(system.file(file.path("templates", "package-sticker.R"), 
+                            package = "rcompendium"), path, overwrite = FALSE))
+  }
   
   
   if (!quiet) {
-    ui_done("Adding {ui_value('hexsticker.png')} to {ui_value('README.Rmd')}")
+    ui_done(paste0("Adding {ui_value('package-sticker.png')} to ", 
+                   "{ui_value('README.Rmd')}"))
+  }
+  
+  invisible(NULL)
+}
+
+
+#' **Search and replace strings in files**
+#' 
+#' File version of [gsub()]. Modified from [xfun::gsub_file()] allowing to 
+#' search for strings in multiple lines.
+#' 
+#' @param file Path of a single file.
+#' 
+#' @param ... Arguments passed to [gsub()].
+#'
+#' @noRd
+
+gsub_in_file <- function(file, ...) {
+  
+  if (!(file.access(file, 2) == 0 && file.access(file, 4) == 0)) {
+    stop("Unable to read or write to ", file)
+  }
+  
+  x1 <- tryCatch(xfun::read_utf8(file, error = TRUE), 
+                 error = function(e) stop(e))
+  
+  if (is.null(x1)) return(invisible(NULL))
+  
+  x1 <- paste0(x1, collapse = "\n")
+  x2 <- gsub(x = x1, ...)
+  
+  if (!identical(x1, x2)) {
+    xfun::write_utf8(x2, file)
   }
   
   invisible(NULL)

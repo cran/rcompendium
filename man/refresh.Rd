@@ -4,36 +4,32 @@
 \alias{refresh}
 \title{Refresh a package/research compendium}
 \usage{
-refresh(compendium = NULL, make = FALSE, check = TRUE, quiet = FALSE)
+refresh(compendium = NULL, make = FALSE, check = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{compendium}{a character of length 1
-
-The name of the folder to recursively detect dependencies to be added to
-the \code{Imports} field of \code{DESCRIPTION} file. It can be \code{'analysis/'} (if
-additional folders, i.e. \verb{data/}, \verb{outputs/}, \verb{figures/}, etc. have been
-created in this folder), \code{'.'} (if folders \verb{data/}, \verb{outputs/},
-\verb{figures/}, etc. have been created at the root of the project), etc.
+\item{compendium}{A character of length 1. The name of the folder to
+recursively detect dependencies to be added to the \code{Imports} field of
+\code{DESCRIPTION} file. It can be \code{'analysis/'} (if additional folders, i.e.
+\verb{data/}, \verb{outputs/}, \verb{figures/}, etc. have been created in this folder),
+\code{'.'} (if folders \verb{data/}, \verb{outputs/}, \verb{figures/}, etc. have been created
+at the root of the project), etc.
 See \code{\link[=new_compendium]{new_compendium()}} for further information.
 
 Default is \code{compendium = NULL} (i.e. no additional folder are inspected
 but \verb{R/}, \code{NAMESPACE}, \verb{vignettes/}, and \verb{tests/} are still inspected).}
 
-\item{make}{a logical value
+\item{make}{A logical value. If \code{TRUE} the Make-like R file \code{make.R} is
+sourced. Only for research compendium created with \code{\link[=new_compendium]{new_compendium()}}.
+Default is \code{FALSE}.}
 
-If \code{TRUE} the Make-like R file \code{make.R} is sourced. Only for research
-compendium created with \code{\link[=new_compendium]{new_compendium()}}. Default is \code{FALSE}.}
+\item{check}{A logical value. If \code{TRUE} package integrity is checked using
+\code{\link[devtools:check]{devtools::check()}}.
+Default is \code{FALSE}.}
 
-\item{check}{a logical value
-
-If \code{TRUE} (default) package integrity is checked using \code{\link[devtools:check]{devtools::check()}}.}
-
-\item{quiet}{a logical value
-
-If \code{TRUE} (default) message are deleted.}
+\item{quiet}{A logical value. If \code{TRUE} (default) message are deleted.}
 }
 \value{
-None
+No return value.
 }
 \description{
 This function refreshes a package/research compendium. It will:
@@ -57,7 +53,7 @@ new_package()
 ## Start developing functions ----
 ## ...
 
-## Update package (documentation, dependencies, README, check) ----
+## Update package (documentation, dependencies, README) ----
 refresh()
 }
 }

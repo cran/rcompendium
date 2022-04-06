@@ -28,19 +28,18 @@
 #' field of the `DESCRIPTION` file (in addition to the package 
 #' [`testthat`](https://testthat.r-lib.org)).
 #' 
-#' @param compendium a character of length 1
-#' 
-#'   The name of the folder to recursively detect dependencies to be added to 
-#'   the `Imports` field of `DESCRIPTION` file. It can be `'analysis/'` (if 
-#'   additional folders, i.e. `data/`, `outputs/`, `figures/`, etc. have been
-#'   created in this folder), `'.'` (if folders `data/`, `outputs/`, 
-#'   `figures/`, etc. have been created at the root of the project), etc. 
+#' @param compendium A character of length 1. The name of the folder to 
+#'   recursively detect dependencies to be added to the `Imports` field of 
+#'   `DESCRIPTION` file. It can be `'analysis/'` (if additional folders, i.e. 
+#'   `data/`, `outputs/`, `figures/`, etc. have been created in this folder), 
+#'   `'.'` (if folders `data/`, `outputs/`, `figures/`, etc. have been created 
+#'   at the root of the project), etc. 
 #'   See [new_compendium()] for further information.
 #'   
 #'   Default is `compendium = NULL` (i.e. no additional folder are inspected 
 #'   but `R/`, `NAMESPACE`, `vignettes/`, and `tests/` are still inspected).
 #' 
-#' @return None
+#' @return No return value.
 #'   
 #' @export
 #' 
@@ -61,14 +60,15 @@ add_dependencies <- function(compendium = NULL) {
   is_package()
   path <- path_proj()
   
+  
   ## If no R function ----
   
-  if (!dir.exists(file.path(path, "R"))) stop("No 'R/' folder found.")
+  # if (!dir.exists(file.path(path, "R"))) stop("No 'R/' folder found.")
   
   
   ## Update Documentation & NAMESPACE ----
   
-  suppressMessages(devtools::document(quiet = TRUE))
+  # suppressMessages(devtools::document(quiet = TRUE))
   
   
   ## Detect Dependencies in NAMESPACE ----
@@ -81,7 +81,7 @@ add_dependencies <- function(compendium = NULL) {
   deps_in_functions <- get_deps_in_functions_r()
   
   
-  ## Detect Dependencies in import/ ----
+  ## Detect Dependencies in compendium ----
   
   deps_extra <- get_deps_extra(compendium)
   
@@ -162,6 +162,12 @@ add_dependencies <- function(compendium = NULL) {
   deps_suggest    <- deps_suggest[!(deps_suggest %in% package_name)]
   
   
+  ## Remove Base packages ----
+  
+  deps_in_package <- deps_in_package[!(deps_in_package %in% "base")]
+  deps_suggest    <- deps_suggest[!(deps_suggest %in% "base")]
+  
+  
   ## Remove duplicates ----
   
   if (length(deps_suggest)) {
@@ -219,6 +225,7 @@ add_dependencies <- function(compendium = NULL) {
     }
     
     # Message
+    
     ui_line(paste0("  {clisymbols::symbol$radio_on} Found ", 
                    "{ui_value(length(pkgs_in_imports))} package(s)")) 
     
@@ -263,6 +270,7 @@ add_dependencies <- function(compendium = NULL) {
     
     
     # Message
+    
     ui_line(paste0("  {clisymbols::symbol$radio_on} Found ", 
                    "{ui_value(length(pkgs_in_suggests))} package(s)"))
     

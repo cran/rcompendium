@@ -14,35 +14,28 @@ add_citation(
 )
 }
 \arguments{
-\item{given}{a character of length 1
+\item{given}{A character of length 1. The given name of the project
+maintainer.}
 
-The given name of the package maintainer.}
+\item{family}{A character of length 1. The family name of the project
+maintainer.}
 
-\item{family}{a character of length 1
+\item{organisation}{A character of length 1. The name of the GitHub
+organisation to host the package. If \code{NULL} (default) the GitHub account
+will be used. This argument is used to set the URL of the package
+(hosted on GitHub).}
 
-The family name of the package maintainer.}
+\item{open}{A logical value. If \code{TRUE} (default) the file is opened in the
+editor.}
 
-\item{organisation}{a character of length 1
+\item{overwrite}{A logical value. If this file is already present and
+\code{overwrite = TRUE}, it will be erased and replaced. Default is \code{FALSE}.}
 
-The name of the GitHub organisation to host the package. If \code{NULL}
-(default) the GitHub account will be used. This argument is used to set
-the URL of the package (hosted on GitHub).}
-
-\item{open}{a logical value
-
-If \code{TRUE} (default) the file is opened in the editor.}
-
-\item{overwrite}{a logical value
-
-If this file is already present and \code{overwrite = TRUE}, it will be erased
-and replaced. Default is \code{FALSE}.}
-
-\item{quiet}{a logical value
-
-If \code{TRUE} messages are deleted. Default is \code{FALSE}.}
+\item{quiet}{A logical value. If \code{TRUE} messages are deleted. Default is
+\code{FALSE}.}
 }
 \value{
-None
+No return value.
 }
 \description{
 This function creates a \code{CITATION} file in the folder \verb{inst/}. This file
@@ -60,10 +53,12 @@ citation("pkg")    # If you have installed your package <pkg>
 Other create files: 
 \code{\link{add_compendium}()},
 \code{\link{add_description}()},
+\code{\link{add_dockerfile}()},
 \code{\link{add_license}()},
 \code{\link{add_makefile}()},
 \code{\link{add_package_doc}()},
 \code{\link{add_readme_rmd}()},
+\code{\link{add_renv}()},
 \code{\link{add_testthat}()},
 \code{\link{add_vignette}()}
 }
