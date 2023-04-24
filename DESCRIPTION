@@ -1,7 +1,7 @@
 Package: rcompendium
 Type: Package
 Title: Create a Package or Research Compendium Structure
-Version: 1.0
+Version: 1.1
 Authors@R: c(
     person(given   = "Nicolas",
            family  = "Casajus",
@@ -26,14 +26,14 @@ Encoding: UTF-8
 Depends: R (>= 2.10)
 Imports: clisymbols, crayon, devtools, gert, gh, gtools, renv,
         rmarkdown, rstudioapi, stringr, usethis, utils, xfun
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Suggests: fs, knitr, testthat (>= 3.0.0), withr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2022-04-06 07:19:58 UTC; nicolascasajus
+Packaged: 2023-04-24 12:58:16 UTC; nicolas
 Author: Nicolas Casajus [aut, cre, cph]
     (<https://orcid.org/0000-0002-5537-5294>)
 Maintainer: Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>
 Repository: CRAN
-Date/Publication: 2022-04-06 07:40:02 UTC
+Date/Publication: 2023-04-24 14:20:02 UTC
