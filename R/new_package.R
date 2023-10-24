@@ -43,27 +43,35 @@
 #' 
 #' @param status A character vector of length 1. The status of the project 
 #'   according to the standard defined by the  \url{https://www.repostatus.org} 
-#'   project. One among `'concept'` (default), `'wip'`, `'suspended'`, 
+#'   project. One among `'concept'`, `'wip'`, `'suspended'`, 
 #'   `'abandoned'`, `'active'`, `'inactive'`, or `'unsupported'`. 
 #'   See [add_repostatus_badge()] for further information. 
 #'   
 #'   This argument is used to add a badge to the `README.Rmd` to help visitors 
 #'   to better understand your project. If you don't want this badge use 
-#'   `status = NULL`.
+#'   `status = NULL` (default). 
 #'   
 #'   This status can be added/changed later by using [add_repostatus_badge()].
 #' 
 #' @param lifecycle A character vector of length 1. The life cycle stage of the 
 #'   project according to the standard defined at  
 #'   \url{https://lifecycle.r-lib.org/articles/stages.html}. One among 
-#'   `'experimental'` (default), `'stable'`, `'deprecated'`, or `'superseded'`.
+#'   `'experimental'`, `'stable'`, `'deprecated'`, or `'superseded'`.
 #'   See [add_lifecycle_badge()] for further information. 
 #'   
 #'   This argument is used to add a badge to the `README.Rmd` to help visitors 
 #'   to better understand your project. If you don't want this badge use 
-#'   `lifecycle = NULL`. 
+#'   `lifecycle = NULL` (default). 
 #'   
 #'   This stage can be added/changed later by using [add_lifecycle_badge()].
+#' 
+#' @param contributing A logical value. If `TRUE` (default) adds a 
+#'   `CONTRIBUTING.md` file and `ISSUE_TEMPLATES`. See [add_contributing()] for
+#'   further information.
+#' 
+#' @param code_of_conduct A logical value. If `TRUE` (default) adds a 
+#'   `CODE_OF_CONDUCT.md` file. See [add_code_of_conduct()] for further 
+#'   information.
 #' 
 #' @param vignette A logical value. If `TRUE` (default) creates a vignette in 
 #'   `vignettes/`. Packages [`knitr`](https://yihui.org/knitr/) and 
@@ -93,6 +101,12 @@
 #' @param gh_render A logical value. If `TRUE` (default) configures GitHub 
 #'   Actions to automatically knit the `README.Rmd` after each push. 
 #'   See [add_github_actions_render()] for further information. 
+#'   
+#'   If `create_repo = FALSE` this argument is ignored.
+#'   
+#' @param gh_citation A logical value. If `TRUE` (default) configures GitHub 
+#'   Actions to automatically update the `CITATION.cff` file. 
+#'   See [add_github_actions_citation()] for further information. 
 #'   
 #'   If `create_repo = FALSE` this argument is ignored.
 #' 
@@ -280,13 +294,14 @@
 #' refresh()
 #' }
 
-new_package <- function(license = "GPL (>= 2)", status = "concept", 
-                        lifecycle = "experimental", vignette = TRUE, 
+new_package <- function(license = "GPL (>= 2)", status = NULL, 
+                        lifecycle = NULL, contributing = TRUE,
+                        code_of_conduct = TRUE, vignette = TRUE, 
                         test = TRUE, create_repo = TRUE, private = FALSE, 
                         gh_check = TRUE, codecov = TRUE, website = TRUE, 
-                        gh_render = TRUE, given = NULL, family = NULL, 
-                        email = NULL, orcid = NULL, organisation = NULL, 
-                        overwrite = FALSE, quiet = FALSE) {
+                        gh_render = TRUE, gh_citation = TRUE, given = NULL, 
+                        family = NULL, email = NULL, orcid = NULL, 
+                        organisation = NULL, overwrite = FALSE, quiet = FALSE) {
   
   
   ## If not RStudio ----
@@ -398,10 +413,11 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     
   } else {
     
-    gh_check  <- FALSE
-    codecov   <- FALSE
-    website   <- FALSE
-    gh_render <- FALSE
+    gh_check    <- FALSE
+    codecov     <- FALSE
+    website     <- FALSE
+    gh_render   <- FALSE
+    gh_citation <- FALSE
   }
   
   
@@ -567,6 +583,36 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     
     add_vignette(open = FALSE, overwrite = overwrite, quiet = quiet)
   }
+
+  
+  
+  ##
+  ## ADDING CONTRIBUTING ----
+  ## 
+  
+  
+  if (contributing) {
+    
+    ui_title("Adding Contributing")
+    
+    add_contributing(email = email, organisation = organisation, open = FALSE, 
+                     overwrite = overwrite, quiet = quiet)
+  } 
+  
+  
+  
+  ##
+  ## ADDING CODE OF CONDUCT ----
+  ## 
+  
+  
+  if (code_of_conduct) {
+    
+    ui_title("Adding Code of conduct")
+    
+    add_code_of_conduct(email = email, open = FALSE, overwrite = overwrite, 
+                        quiet = quiet)
+  }
   
   
   
@@ -615,11 +661,11 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   ## Commit changes ----
   
   invisible(gert::git_add("."))
-  invisible(gert::git_commit("Init repo"))
+  invisible(gert::git_commit("init repo"))
 
   if (!quiet) {
     ui_done(paste0("Committing changes with the following message: ", 
-                   "{ui_value('Init repo')}"))
+                   "{ui_value('init repo')}"))
   }
   
   
@@ -714,6 +760,22 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     
     usethis::use_github_pages(branch = "gh-pages")
   }
+  
+  
+  
+  ##
+  ## GHA CITATION ----
+  ## 
+  
+  
+  
+  if (gh_citation) {
+    
+    ui_title("Configuring GH Actions - CITATION.cff")
+    
+    add_github_actions_citation(quiet = quiet)
+    add_to_buildignore(".github", quiet = quiet)
+  }
 
   
   
@@ -723,17 +785,17 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   
   
   
-  if (gh_check || codecov || gh_render || website) {
+  if (gh_check || codecov || gh_render || website || gh_citation) {
     
     ui_title("Committing changes")
     
     invisible(gert::git_add("."))
-    invisible(gert::git_commit("Setup GHA"))
+    invisible(gert::git_commit("ci: setup actions"))
     
     if (!quiet) {
       
       ui_done(paste0("Committing changes with the following message: ", 
-                     "{ui_value('Setup GHA')}"))
+                     "{ui_value('ci: setup actions')}"))
     }
   }
   
@@ -748,6 +810,8 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   ui_title("Adding Badges to README") 
   
   
+  add_cran_badge(quiet = quiet)
+  
   if (gh_check) {
     add_github_actions_check_badge(organisation, quiet = quiet)
   }
@@ -761,7 +825,6 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     add_codecov_badge(organisation, quiet = quiet)
   }
   
-  add_cran_badge(quiet = quiet)
   add_license_badge(quiet = quiet)
   
   if (!is.null(lifecycle)) {
@@ -772,7 +835,7 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
     add_repostatus_badge(status, quiet = quiet)
   }
   
-  add_dependencies_badge(quiet = quiet)
+  # add_dependencies_badge(quiet = quiet)
   
   
   
@@ -801,12 +864,12 @@ new_package <- function(license = "GPL (>= 2)", status = "concept",
   ui_title("Committing changes")
   
   invisible(gert::git_add("."))
-  invisible(gert::git_commit("Edit README"))
+  invisible(gert::git_commit("doc: update README"))
     
   if (!quiet) {
     
     ui_done(paste0("Committing changes with the following message: ", 
-                   "{ui_value('Edit README')}"))
+                   "{ui_value('doc: update README')}"))
   }
 
 

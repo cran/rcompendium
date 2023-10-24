@@ -24,7 +24,9 @@ add_r_depend()
 Other development functions: 
 \code{\link{add_dependencies}()},
 \code{\link{add_github_actions_check}()},
+\code{\link{add_github_actions_citation}()},
 \code{\link{add_github_actions_codecov}()},
+\code{\link{add_github_actions_document}()},
 \code{\link{add_github_actions_pkgdown}()},
 \code{\link{add_github_actions_render}()},
 \code{\link{add_to_buildignore}()},

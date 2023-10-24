@@ -110,7 +110,7 @@ add_citation <- function(given = NULL, family = NULL, organisation = NULL,
   ## Messages ----
   
   if (!quiet) ui_done("Writing {ui_value('inst/CITATION')} file")
-  
+
   if (open) edit_file(path)
   
   invisible(NULL)

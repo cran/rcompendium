@@ -5,10 +5,12 @@
 \title{Create an R compendium structure}
 \usage{
 new_compendium(
-  compendium = ".",
+  compendium = NULL,
   license = "GPL (>= 2)",
   status = NULL,
   lifecycle = NULL,
+  contributing = TRUE,
+  code_of_conduct = TRUE,
   vignette = FALSE,
   test = FALSE,
   create_repo = TRUE,
@@ -17,6 +19,7 @@ new_compendium(
   codecov = FALSE,
   website = FALSE,
   gh_render = FALSE,
+  gh_citation = FALSE,
   given = NULL,
   family = NULL,
   email = NULL,
@@ -29,10 +32,8 @@ new_compendium(
 )
 }
 \arguments{
-\item{compendium}{A character vector of length 1. By default, compendium
-folders are created at the root of the project. User can change their
-location with this argument. For instance, if \code{compendium = 'analysis'},
-compendium folders will be created inside the directory \verb{analysis/}.}
+\item{compendium}{A character vector specifying the folders to be created.
+See \code{\link[=add_compendium]{add_compendium()}} for further information.}
 
 \item{license}{A character vector of length 1. The license to be used for
 this project. Run \code{\link[=get_licenses]{get_licenses()}} to choose an appropriate one. Default
@@ -63,6 +64,14 @@ This argument is used to add a badge to the \code{README.Rmd} to help visitors
 to better understand your project. Default is \code{lifecycle = NULL}.
 
 This stage can be added/changed later by using \code{\link[=add_lifecycle_badge]{add_lifecycle_badge()}}.}
+
+\item{contributing}{A logical value. If \code{TRUE} (default) adds a
+\code{CONTRIBUTING.md} file and \code{ISSUE_TEMPLATES}. See \code{\link[=add_contributing]{add_contributing()}} for
+further information.}
+
+\item{code_of_conduct}{A logical value. If \code{TRUE} (default) adds a
+\code{CODE_OF_CONDUCT.md} file. See \code{\link[=add_code_of_conduct]{add_code_of_conduct()}} for further
+information.}
 
 \item{vignette}{A logical value. If \code{TRUE} creates a vignette in
 \verb{vignettes/}. Packages \href{https://yihui.org/knitr/}{\code{knitr}} and
@@ -108,6 +117,12 @@ If \code{create_repo = FALSE} this argument is ignored. Default is \code{FALSE}.
 \item{gh_render}{A logical value. If \code{TRUE} configures GitHub
 Actions to automatically knit the \code{README.Rmd} after each push.
 See \code{\link[=add_github_actions_render]{add_github_actions_render()}} for further information.
+
+If \code{create_repo = FALSE} this argument is ignored. Default is \code{FALSE}.}
+
+\item{gh_citation}{A logical value. If \code{TRUE} configures GitHub
+Actions to automatically update the \code{CITATION.cff} file.
+See \code{\link[=add_github_actions_citation]{add_github_actions_citation()}} for further information.
 
 If \code{create_repo = FALSE} this argument is ignored. Default is \code{FALSE}.}
 

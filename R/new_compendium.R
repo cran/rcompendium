@@ -37,10 +37,8 @@
 #' All these files/folders are added to the `.Rbuildignore` so the rest of the
 #' project (e.g. R functions) can be used (or installed) as a R package.
 #' 
-#' @param compendium A character vector of length 1. By default, compendium 
-#'   folders are created at the root of the project. User can change their 
-#'   location with this argument. For instance, if `compendium = 'analysis'`, 
-#'   compendium folders will be created inside the directory `analysis/`.
+#' @param compendium A character vector specifying the folders to be created.
+#'   See [add_compendium()] for further information.
 #' 
 #' @param license A character vector of length 1. The license to be used for 
 #'   this project. Run [get_licenses()] to choose an appropriate one. Default 
@@ -71,6 +69,14 @@
 #'   to better understand your project. Default is `lifecycle = NULL`. 
 #'   
 #'   This stage can be added/changed later by using [add_lifecycle_badge()].
+#' 
+#' @param contributing A logical value. If `TRUE` (default) adds a 
+#'   `CONTRIBUTING.md` file and `ISSUE_TEMPLATES`. See [add_contributing()] for
+#'   further information.
+#' 
+#' @param code_of_conduct A logical value. If `TRUE` (default) adds a 
+#'   `CODE_OF_CONDUCT.md` file. See [add_code_of_conduct()] for further 
+#'   information.
 #' 
 #' @param vignette A logical value. If `TRUE` creates a vignette in 
 #'   `vignettes/`. Packages [`knitr`](https://yihui.org/knitr/) and 
@@ -109,6 +115,12 @@
 #' @param gh_render A logical value. If `TRUE` configures GitHub 
 #'   Actions to automatically knit the `README.Rmd` after each push. 
 #'   See [add_github_actions_render()] for further information. 
+#'   
+#'   If `create_repo = FALSE` this argument is ignored. Default is `FALSE`.
+#'   
+#' @param gh_citation A logical value. If `TRUE` configures GitHub 
+#'   Actions to automatically update the `CITATION.cff` file. 
+#'   See [add_github_actions_citation()] for further information. 
 #'   
 #'   If `create_repo = FALSE` this argument is ignored. Default is `FALSE`.
 #'   
@@ -188,13 +200,15 @@
 #' refresh()
 #' }
 
-new_compendium <- function(compendium = ".", license = "GPL (>= 2)", 
-                           status = NULL, lifecycle = NULL, vignette = FALSE, 
+new_compendium <- function(compendium = NULL, license = "GPL (>= 2)", 
+                           status = NULL, lifecycle = NULL, contributing = TRUE,
+                           code_of_conduct = TRUE, vignette = FALSE, 
                            test = FALSE, create_repo = TRUE, private = FALSE, 
                            gh_check = FALSE, codecov = FALSE, website = FALSE, 
-                           gh_render = FALSE, given = NULL, family = NULL, 
-                           email = NULL, orcid = NULL, organisation = NULL, 
-                           renv = FALSE, dockerfile = FALSE, overwrite = FALSE, 
+                           gh_render = FALSE, gh_citation = FALSE, given = NULL,
+                           family = NULL, email = NULL, orcid = NULL, 
+                           organisation = NULL, renv = FALSE, 
+                           dockerfile = FALSE, overwrite = FALSE, 
                            quiet = FALSE) { 
   
   ## If not RStudio ----
@@ -304,10 +318,11 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
     
   } else {
     
-    gh_check  <- FALSE
-    codecov   <- FALSE
-    website   <- FALSE
-    gh_render <- FALSE
+    gh_check    <- FALSE
+    codecov     <- FALSE
+    website     <- FALSE
+    gh_render   <- FALSE
+    gh_citation <- FALSE
   }
   
   
@@ -419,9 +434,9 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   if (!quiet) ui_done("Creating {ui_value('R/')} directory")
   
   
-  dir.create(file.path(path_proj(), "man"), showWarnings = FALSE)
+  # dir.create(file.path(path_proj(), "man"), showWarnings = FALSE)
   
-  if (!quiet) ui_done("Creating {ui_value('man/')} directory")
+  # if (!quiet) ui_done("Creating {ui_value('man/')} directory")
   
   if (!quiet) ui_line()
   
@@ -448,8 +463,10 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   if (!quiet) ui_line()
   if (!quiet) ui_done("Writing {ui_value('R/fun-demo.R')} file")
   
-  suppressMessages(devtools::document(quiet = TRUE))
+  # suppressMessages(devtools::document(quiet = TRUE))
   
+  add_to_gitignore("man/", quiet = quiet)
+  add_to_gitignore("NAMESPACE", quiet = quiet)
   
   
   ##
@@ -460,7 +477,7 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   
   ui_title("Creating Compendium Folders")  
   
-  add_compendium(compendium)
+  add_compendium(compendium, quiet = quiet)
   ui_line()
   
   add_makefile(given, family, email, open = FALSE, overwrite = overwrite, 
@@ -522,6 +539,36 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   
   
   ##
+  ## ADDING CONTRIBUTING ----
+  ## 
+  
+  
+  if (contributing) {
+    
+    ui_title("Adding Contributing")
+    
+    add_contributing(email = email, organisation = organisation, open = FALSE, 
+                     overwrite = overwrite, quiet = quiet)
+  } 
+  
+  
+  
+  ##
+  ## ADDING CODE OF CONDUCT ----
+  ## 
+  
+  
+  if (code_of_conduct) {
+    
+    ui_title("Adding Code of conduct")
+    
+    add_code_of_conduct(email = email, open = FALSE, overwrite = overwrite, 
+                        quiet = quiet)
+  }
+  
+  
+  
+  ##
   ## ADDING README ----
   ## 
   
@@ -566,11 +613,11 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   ## Commit changes ----
   
   invisible(gert::git_add("."))
-  invisible(gert::git_commit("Init repo"))
+  invisible(gert::git_commit("init repo"))
   
   if (!quiet) {
     ui_done(paste0("Committing changes with the following message: ", 
-                   "{ui_value('Init repo')}"))
+                   "{ui_value('init repo')}"))
   }
   
   
@@ -669,22 +716,38 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   
   
   ##
+  ## GHA CITATION ----
+  ## 
+  
+  
+  
+  if (gh_citation) {
+    
+    ui_title("Configuring GH Actions - CITATION.cff")
+    
+    add_github_actions_citation(quiet = quiet)
+    add_to_buildignore(".github", quiet = quiet)
+  }
+  
+  
+  
+  ##
   ## SECOND COMMIT ----
   ## 
   
   
   
-  if (gh_check || codecov || website || gh_render) {
+  if (gh_check || codecov || website || gh_render || gh_citation) {
     
     ui_title("Committing changes")
     
     invisible(gert::git_add("."))
-    invisible(gert::git_commit("Setup GHA"))
+    invisible(gert::git_commit("ci: setup actions"))
     
     if (!quiet) {
       
       ui_done(paste0("Committing changes with the following message: ", 
-                     "{ui_value('Setup GHA')}"))
+                     "{ui_value('ci: setup actions')}"))
     }
   }
   
@@ -738,7 +801,7 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
     add_repostatus_badge(status, quiet = quiet)
   }
   
-  add_dependencies_badge(quiet = quiet)
+  # add_dependencies_badge(quiet = quiet)
   
   
   
@@ -767,12 +830,12 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   ui_title("Committing changes")
   
   invisible(gert::git_add("."))
-  invisible(gert::git_commit("Edit README"))
+  invisible(gert::git_commit("doc: update README"))
   
   if (!quiet) {
     
     ui_done(paste0("Committing changes with the following message: ", 
-                   "{ui_value('Edit README')}"))
+                   "{ui_value('doc: update README')}"))
   }
   
   
@@ -797,13 +860,21 @@ new_compendium <- function(compendium = ".", license = "GPL (>= 2)",
   if (test) 
     ui_todo(paste0("Write your units tests in the ", 
                    "{ui_value('tests/testthat/')} directory"))
+  
+  if (!is.null(compendium)) {
+    
+    ui_line()
+    ui_todo("Put your data in {ui_value('data/raw-data')} directory")
+    ui_todo("Write your R scripts in the {ui_value('analyses/')} directory")
+    ui_todo("Source your R scripts in the {ui_value('make.R')} file")
+    ui_todo(paste0("Export your derived data in the ", 
+                   "{ui_value('data/derived-data/')} directory"))
+    ui_todo("Export your outputs in the {ui_value('outputs/')} directory")
+    ui_todo("Export your figures in the {ui_value('figures/')} directory")
+  }
+  
   ui_line()
-  ui_todo("Put your data in {ui_value('data/')} directory")
-  ui_todo("Write your R scripts in the {ui_value('analyses/')} directory")
-  ui_todo("Export your outputs in the {ui_value('outputs/')} directory")
-  ui_todo("Export your figures in the {ui_value('figures/')} directory")
-  ui_line()
-  ui_todo("Refresh your package with {ui_code('refresh()')}")
+
   ui_todo("...and commit your changes!")
   
   invisible(NULL)

@@ -1,3 +1,34 @@
+# rcompendium 1.2
+
+* **New features**
+
+  * `get_git_branch_name()` detects git branch name
+  * `add_contributing()` adds a `CONTRIBUTING.md` file and issue templates
+  * `add_code_of_conduct()` adds a `CODE_OF_CONDUCT.md` file
+  * `add_github_actions_citation()` adds a new GitHub action to update the 
+  `CITATION.cff` file
+  * `add_github_actions_document()` adds a new GitHub action to update `Rd` files,
+  the `NAMESPACE` and the `DESCRIPTION` files
+
+* **Improvements**
+
+  * `get_deps_*()` better detects project dependencies
+  * `add_compendium()` allows now the user to choose its own compendium structure
+
+* **Minor changes**
+
+  * Update GitHub Actions templates (`yaml` files)
+  * Update README templates
+  * The `man/` folder and `NAMESPACE` are now untracked by git (for compendium only)
+  * Remove dependencies badge in README
+  * Change default values of `lifecycle` and `status` arguments in `new_package()`
+  * Change commit messages in `new_*()` functions (conventional commits)
+
+* **Deprecated**
+
+  * `refresh()` is now deprecated and will be deleted in the new version
+
+
 # rcompendium 1.1
 
 * Update GitHub Actions templates (`yaml` files)
