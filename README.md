@@ -71,6 +71,20 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 remotes::install_github("FRBCesab/rcompendium")
 ```
 
+**Note:** On Unix system you may have an error during the installation
+linked to the [**V8 JavaScript engine**](https://v8.dev/). This software
+is required by the R package [`cffr`](https://docs.ropensci.org/cffr/)
+(included in `rcompendium`). Run the following line and try to reinstall
+`rcompendium`.
+
+``` r
+## Fix V8 issues ----
+Sys.setenv(DOWNLOAD_STATIC_LIBV8 = 1)
+
+## Install < rcompendium > ----
+install.packages("rcompendium")
+```
+
 ## Usage
 
 Please read the [Get
@@ -92,7 +106,7 @@ Others available vignettes:
 Please cite this package as:
 
 > Casajus N. (2023) rcompendium: An R package to create a package or
-> research compendium structure. Version 1.2,
+> research compendium structure. Version 1.3,
 > <https://github.com/FRBCesab/rcompendium>.
 
 You can also run:
@@ -106,7 +120,7 @@ citation("rcompendium")
 ##   title  = {{rcompendium}: {An} {R} package to create a package or research compendium structure},
 ##   author = {{Casajus N.}},
 ##   year   = {2023},
-##   note   = {R package version 1.1},
+##   note   = {R package version 1.3},
 ##   url    = {https://github.com/FRBCesab/rcompendium},
 ## }
 ```
